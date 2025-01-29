@@ -3,7 +3,7 @@ public class CaseConnectorApiTests {
 
   private static final Case MODEL_CASE_CREATE = 
     new Case(Subject = 'Budget Crisis: The Human Fund Needs More Human Funds!"', 
-      Description = 'George Costanza needs urgent help fixing budget issues  ' +
+      Description = 'George Costanza needs urgent help fixing budget issues ' +
         'at the "Human Fund."', Status = 'New', Origin = 'web',
       SuppliedName = 'George Costanza', SuppliedPhone = '(555) 123-HUMN', 
       SuppliedEmail = 'GCostanza@TheHumanFund.com');
@@ -52,9 +52,8 @@ public class CaseConnectorApiTests {
       'Create should have been blocked with a bad origin');
   }
 
-  
   @isTest
-  private static void createCaseBadEmaild() {
+  private static void createCaseBadEmail() {
     Boolean exceptionHit;
     try {
       callDoCreate(MODEL_CASE_CREATE.Origin, 'test');
@@ -63,7 +62,6 @@ public class CaseConnectorApiTests {
     }
     Assert.isTrue(exceptionHit);
   }
-
 
   private static void callDoCreate() {
     callDoCreate(MODEL_CASE_CREATE.Origin, MODEL_CASE_CREATE.SuppliedEmail);

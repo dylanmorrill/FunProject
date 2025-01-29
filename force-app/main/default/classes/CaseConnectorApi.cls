@@ -20,7 +20,6 @@ global without sharing class CaseConnectorApi {
     } catch (Exception ex) {
       new FancyPlatformEventLoggingFramework().fireFailureEvent(ex, CLASS_NAME, 
         'doCreate');
-        system.debug(ex.getTypeName() );
       if (ex.getTypeName() == EXCEPTION_NAME_CREATE) {
         throw ex;
       }
@@ -42,10 +41,10 @@ global without sharing class CaseConnectorApi {
     if (SHALL_MATCH_CONTACT_ON_CREATE) {
       List<Contact> matchingContacts = 
         [FIND :email
-          IN EMAIL FIELDS 
-          RETURNING Contact(Id 
-                    ORDER BY CreatedDate desc 
-                    LIMIT 1)][0];
+         IN EMAIL FIELDS 
+         RETURNING Contact(Id 
+                   ORDER BY CreatedDate desc 
+                   LIMIT 1)][0];
       if (!matchingContacts.isEmpty()) {
         newCase.ContactId = matchingContacts[0].Id;
       }
@@ -62,7 +61,6 @@ global without sharing class CaseConnectorApi {
     }
     return new List<String>(validationHits);
   }
-
 
   public class CaseCreateException extends Exception {}
 }

@@ -10,5 +10,5 @@
 
 **Apex Classes**
 1. **CaseConnectorApi:** handles post requests and inserts cases. Performs basic validation. Returns created case Id on success and Apex 500 server error on errors.
-2. **CaseConnectorApi:** Runs some simple tests
+2. **CaseConnectorApi:** runs some simple tests
 
