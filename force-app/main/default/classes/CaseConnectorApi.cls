@@ -20,14 +20,11 @@ global without sharing class CaseConnectorApi {
     } catch (Exception ex) {
       new FancyPlatformEventLoggingFramework().fireFailureEvent(ex, CLASS_NAME, 
         'doCreate');
-      if (ex.getTypeName() == EXCEPTION_NAME_CREATE) {
-        throw ex;
-      }
       throw new CaseCreateException(ex.getMessage());
     }
   }
 
-  private static Id createCase(String subject, String description, 
+  private static String createCase(String subject, String description, 
     String status, String origin, String name, String phone, String email) {
 
     String defaultStatus = 'New';
@@ -36,7 +33,9 @@ global without sharing class CaseConnectorApi {
       SuppliedPhone = phone, SuppliedEmail = email);
     List<String> validationHits = validateOnCreate(newCase);
     if (!validationHits.isEmpty()) {
-      throw new CaseCreateException(JSON.serialize(validationHits));
+      RestResponse res = RestContext.response;
+      res.statusCode = 400;
+      return JSON.serialize(validationHits);
     }
     if (SHALL_MATCH_CONTACT_ON_CREATE) {
       List<Contact> matchingContacts = 
