@@ -9,8 +9,6 @@
 - The "Client Credentials Flow" runs under a secure Integration user
 
 **Apex Classes**
-1. CaseConnectorApi
-    a. doCreate(): handles post requests and inserts cases. Performs basic validation. Returns created case Id on success and Apex 500 server error on errors.
-2. CaseConnectorApi
-    a. Runs some simple tests
+1. **CaseConnectorApi:** handles post requests and inserts cases. Performs basic validation. Returns created case Id on success and Apex 500 server error on errors.
+2. **CaseConnectorApi:** Runs some simple tests
 
