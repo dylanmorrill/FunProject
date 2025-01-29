@@ -39,11 +39,9 @@ global without sharing class CaseConnectorApi {
     }
     if (SHALL_MATCH_CONTACT_ON_CREATE) {
       List<Contact> matchingContacts = 
-        [FIND :email
-         IN EMAIL FIELDS 
-         RETURNING Contact(Id 
-                   ORDER BY CreatedDate desc 
-                   LIMIT 1)][0];
+        [SELECT Id
+         FROM Contact
+         WHERE Email = :email];
       if (!matchingContacts.isEmpty()) {
         newCase.ContactId = matchingContacts[0].Id;
       }
