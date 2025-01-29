@@ -40,10 +40,6 @@ public class CaseConnectorApiTests {
 
   @isTest
   private static void createCaseWithContactMatch() {
-    Test.setFixedSearchResults(new List<Id> { 
-      [SELECT Id
-       FROM Contact 
-       LIMIT 1][0].Id });
     callDoCreate();
     Case createdCase = getCaseCreate();
     if (CaseConnectorApi.SHALL_MATCH_CONTACT_ON_CREATE) {
