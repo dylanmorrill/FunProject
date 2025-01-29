@@ -16,6 +16,29 @@ public class CaseConnectorApiTests {
   }
 
   @isTest
+  private static void createCaseBadEmail() {
+    Boolean exceptionHit;
+    try {
+      callDoCreate(MODEL_CASE_CREATE.Origin, 'test');
+    } catch (Exception ex) {
+      exceptionHit = true;
+    }
+    Assert.isTrue(exceptionHit);
+  }
+
+  @isTest
+  private static void createCaseBadOrigin() {
+    Boolean exceptionHit;
+    try {
+      callDoCreate('pigeon', MODEL_CASE_CREATE.SuppliedEmail);
+    } catch (CaseConnectorApi.CaseCreateException ex) {
+      exceptionHit = true;
+    }
+    Assert.isTrue(exceptionHit, 
+      'Create should have been blocked with a bad origin');
+  }
+
+  @isTest
   private static void createCaseWithContactMatch() {
     Test.setFixedSearchResults(new List<Id> { 
       [SELECT Id
@@ -38,29 +61,6 @@ public class CaseConnectorApiTests {
     callDoCreate();
     Assert.isTrue(validateCaseCreate(getCaseCreate()), 
       'The created case did not have all values correctly set');
-  }
-
-  @isTest
-  private static void createCaseBadOrigin() {
-    Boolean exceptionHit;
-    try {
-      callDoCreate('pigeon', MODEL_CASE_CREATE.SuppliedEmail);
-    } catch (CaseConnectorApi.CaseCreateException ex) {
-      exceptionHit = true;
-    }
-    Assert.isTrue(exceptionHit, 
-      'Create should have been blocked with a bad origin');
-  }
-
-  @isTest
-  private static void createCaseBadEmail() {
-    Boolean exceptionHit;
-    try {
-      callDoCreate(MODEL_CASE_CREATE.Origin, 'test');
-    } catch (Exception ex) {
-      exceptionHit = true;
-    }
-    Assert.isTrue(exceptionHit);
   }
 
   private static void callDoCreate() {
