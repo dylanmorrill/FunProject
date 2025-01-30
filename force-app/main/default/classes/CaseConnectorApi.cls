@@ -15,7 +15,7 @@ global without sharing class CaseConnectorApi {
     String status, String origin, String name, String phone, String email) {
 
     try {
-      return createCase(subject, description, status, origin, name, phone, 
+      return createCase(subject, description, origin, name, phone, 
         email);
     } catch (Exception ex) {
       new FancyPlatformEventLoggingFramework().fireFailureEvent(ex, CLASS_NAME, 
@@ -25,7 +25,7 @@ global without sharing class CaseConnectorApi {
   }
 
   private static String createCase(String subject, String description, 
-    String status, String origin, String name, String phone, String email) {
+    String origin, String name, String phone, String email) {
 
     String defaultStatus = 'New';
     Case newCase = new Case(Subject = subject, Description = description, 
@@ -41,7 +41,9 @@ global without sharing class CaseConnectorApi {
       List<Contact> matchingContacts = 
         [SELECT Id
          FROM Contact
-         WHERE Email = :email];
+         WHERE Email = :email
+         ORDER BY CreatedDate DESC
+         LIMIT 1];
       if (!matchingContacts.isEmpty()) {
         newCase.ContactId = matchingContacts[0].Id;
       }
